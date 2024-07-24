@@ -1,8 +1,8 @@
 const he = {
   get_started: {
-    title: "מצא וקנה ברכישה קבוצתית",
-    sign_in_email: 'התחבר באמצעות דוא"ל',
-    sign_in_google: `התחבר באמצעות גוגל`,
+    title: "קונים ונהנים ביחד",
+    sign_in_email: `Apple התחבר באמצעות`,
+    sign_in_google: `Google התחבר באמצעות`,
     not_member: `לא חבר?`,
     sign_up: `הירשם`,
   },

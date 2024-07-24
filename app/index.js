@@ -92,7 +92,7 @@ const Index = () => {
                 }}
               >
                 <Typography
-                  text={i18n.t("get_started.not_member")}
+                  text={i18n.t("sign_in.dont_have_account")}
                   color={MyTheme.white}
                   size={16}
                   fontFamily="ploni-medium"
