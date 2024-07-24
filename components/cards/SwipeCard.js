@@ -22,13 +22,15 @@ import Animated, {
   useAnimatedStyle,
   interpolateColor,
 } from "react-native-reanimated";
+import { router } from "expo-router";
 const SCREEN_POSITION = SCREENWIDTH - 90;
 const SwipeCard = ({ productData, style, scrollX, index, activeItem }) => {
   const CARD_POSITION = index * SCREEN_POSITION;
-
+  const goToProductDetail = () => {
+    router.push("/(tabs)/product_detail");
+  };
   const backgroundColorStyles = useAnimatedStyle(() => {
     const isActive = activeItem.value === index;
-    console.log(activeItem.value);
     const backgroundColor = interpolateColor(
       scrollX.value,
       [
@@ -46,31 +48,24 @@ const SwipeCard = ({ productData, style, scrollX, index, activeItem }) => {
     };
   });
   return (
-    <Animated.View style={[styles.container, style, backgroundColorStyles]}>
-      <View style={styles.imageContainer}>
-        <Image
-          source={productData?.image}
-          style={{ width: "100%", aspectRatio: 2, maxHeight: 216 }}
-          contentFit="contain"
-        />
-        <TouchableOpacity style={styles.rightButton}>
-          <InfoIcon />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.leftButton}>
-          <ShareIcon />
-        </TouchableOpacity>
-      </View>
-      <View
-        style={{
-          gap: 28,
-          width: "100%",
-          justifyContent: "flex-start",
-          alignItems: "flex-start",
-        }}
-      >
+    <TouchableOpacity activeOpacity={0.9} onPress={goToProductDetail}>
+      <Animated.View style={[styles.container, style, backgroundColorStyles]}>
+        <View style={styles.imageContainer}>
+          <Image
+            source={productData?.image}
+            style={{ width: "100%", aspectRatio: 2, maxHeight: 216 }}
+            contentFit="contain"
+          />
+          <TouchableOpacity style={styles.rightButton}>
+            <InfoIcon />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.leftButton}>
+            <ShareIcon />
+          </TouchableOpacity>
+        </View>
         <View
           style={{
-            gap: 11,
+            gap: 28,
             width: "100%",
             justifyContent: "flex-start",
             alignItems: "flex-start",
@@ -78,119 +73,128 @@ const SwipeCard = ({ productData, style, scrollX, index, activeItem }) => {
         >
           <View
             style={{
-              justifyContent: "justify-start",
-              alignItems: "center",
               gap: 11,
-              flexDirection: "row",
               width: "100%",
+              justifyContent: "flex-start",
+              alignItems: "flex-start",
             }}
           >
-            <View style={styles.discountTag}>
+            <View
+              style={{
+                justifyContent: "justify-start",
+                alignItems: "center",
+                gap: 11,
+                flexDirection: "row",
+                width: "100%",
+              }}
+            >
+              <View style={styles.discountTag}>
+                <Typography
+                  text={`${i18n.t("groups.discount_off")} ${
+                    productData?.discount
+                  }%`}
+                  color={MyTheme.primary}
+                  size={12}
+                  fontFamily="ploni-medium"
+                />
+              </View>
+
+              <View style={styles.remainingTime}>
+                <Typography
+                  text={productData?.time}
+                  size={12}
+                  fontFamily="ploni-bold"
+                />
+                <TimeIcon />
+              </View>
+            </View>
+            <Typography
+              text={productData?.title}
+              size={18}
+              fontFamily="ploni-semi-bold"
+              color="#1A162E"
+            />
+
+            <View
+              style={{
+                justifyContent: "justify-start",
+                alignItems: "center",
+                gap: 11,
+                flexDirection: "row",
+                width: "100%",
+                marginTop: 4,
+              }}
+            >
               <Typography
-                text={`${i18n.t("groups.discount_off")} ${
-                  productData?.discount
-                }%`}
-                color={MyTheme.primary}
+                text={`${productData?.delivered}/${productData?.totalAvailable}`}
+                color={MyTheme.secondary_dark}
                 size={12}
                 fontFamily="ploni-medium"
               />
-            </View>
-
-            <View style={styles.remainingTime}>
-              <Typography
-                text={productData?.time}
-                size={12}
-                fontFamily="ploni-bold"
-              />
-              <TimeIcon />
+              <UsersIcon />
             </View>
           </View>
-          <Typography
-            text={productData?.title}
-            size={18}
-            fontFamily="ploni-semi-bold"
-            color="#1A162E"
-          />
 
-          <View
-            style={{
-              justifyContent: "justify-start",
-              alignItems: "center",
-              gap: 11,
-              flexDirection: "row",
-              width: "100%",
-              marginTop: 4,
-            }}
-          >
-            <Typography
-              text={`${productData?.delivered}/${productData?.totalAvailable}`}
-              color={MyTheme.secondary_dark}
-              size={12}
-              fontFamily="ploni-medium"
-            />
-            <UsersIcon />
-          </View>
-        </View>
+          <Seller productData={productData} variant="min" />
 
-        <Seller productData={productData} variant="min" />
+          <View style={styles.priceContainer}>
+            <Text
+              ellipsizeMode="clip"
+              numberOfLines={1}
+              accessible={false}
+              style={{ color: "#66707A" }}
+            >
+              - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+              - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+              - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+              - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+            </Text>
 
-        <View style={styles.priceContainer}>
-          <Text
-            ellipsizeMode="clip"
-            numberOfLines={1}
-            accessible={false}
-            style={{ color: "#66707A" }}
-          >
-            - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-            - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-            - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-            - - - - - - - - - - - - - - - - - - - - - - - - - -
-          </Text>
-
-          <View
-            style={{
-              width: "100%",
-              justifyContent: "space-between",
-              alignItems: "center",
-              flexDirection: "row",
-            }}
-          >
-            <Typography
-              text={i18n.t("product_detail.price")}
-              color={MyTheme.line_black}
-              size={16}
-              fontFamily="ploni-semi-bold"
-            />
             <View
               style={{
-                flex: 0.5,
-                justifyContent: "flex-end",
+                width: "100%",
+                justifyContent: "space-between",
                 alignItems: "center",
                 flexDirection: "row",
-                gap: 5,
               }}
             >
-              <View>
-                <Typography
-                  text={`${productData?.realPrice}₪`}
-                  color={MyTheme.grayscale_80}
-                  size={12}
-                  fontFamily="ploni-semi-bold"
-                />
-              </View>
-              <View>
-                <Typography
-                  text={`${productData?.discountedPrice}₪`}
-                  color={MyTheme.line_black}
-                  size={16}
-                  fontFamily="ploni-semi-bold"
-                />
+              <Typography
+                text={i18n.t("product_detail.price")}
+                color={MyTheme.line_black}
+                size={16}
+                fontFamily="ploni-semi-bold"
+              />
+              <View
+                style={{
+                  flex: 0.5,
+                  justifyContent: "flex-end",
+                  alignItems: "center",
+                  flexDirection: "row",
+                  gap: 5,
+                }}
+              >
+                <View>
+                  <Typography
+                    text={`${productData?.realPrice}₪`}
+                    color={MyTheme.grayscale_80}
+                    size={12}
+                    fontFamily="ploni-semi-bold"
+                  />
+                </View>
+                <View>
+                  <Typography
+                    text={`${productData?.discountedPrice}₪`}
+                    color={MyTheme.line_black}
+                    size={16}
+                    fontFamily="ploni-semi-bold"
+                  />
+                </View>
               </View>
             </View>
           </View>
         </View>
-      </View>
-    </Animated.View>
+      </Animated.View>
+    </TouchableOpacity>
   );
 };
 
