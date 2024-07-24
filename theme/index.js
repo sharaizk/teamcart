@@ -26,5 +26,6 @@ export const MyTheme = {
   graysacle_40_2: "#ADAFBB",
   screen_bg: "#F8F8FC",
   dark: "#000",
+  
   yellow: "#EEC978",
 };
