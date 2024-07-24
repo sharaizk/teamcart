@@ -32,7 +32,8 @@
       "infoPlist": {
         "ExpoLocalization_supportsRTL": true,
         "ExpoLocalization_forcesRTL": true
-      }
+      },
+      "bundleIdentifier": "com.teamcart"
     },
     "android": {
       "adaptiveIcon": {
@@ -42,14 +43,15 @@
       "forcesRTL": true,
       "package": "com.teamcart"
     },
-    "web": {
-      "bundler": "metro",
-      "output": "static",
-      "favicon": "./assets/images/favicon.png"
-    },
     "experiments": {
       "typedRoutes": true
     },
-    "owner": "sharaiz_k"
+    "owner": "sharaiz_k",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/d08ad08a-26d0-4a8e-8570-594ea076502c"
+    }
   }
 }
